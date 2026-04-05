@@ -1,9 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Code2,
   Server,
@@ -15,8 +12,6 @@ import {
   Terminal,
   Shield,
 } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type SkillItem = {
   name: string;
@@ -71,66 +66,37 @@ const SKILL_CATEGORIES: SkillCategory[] = [
 const itemHover = { scale: 1.03, opacity: 0.97 };
 
 export default function SkillsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
-  const categoryRefs = useRef<HTMLDivElement[]>([]);
-
-  const trackCategoryRef = (el: HTMLDivElement) => {
-    if (el && !categoryRefs.current.includes(el)) categoryRefs.current.push(el);
-  };
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { duration: 0.35, ease: "power2.out" } });
-
-      tl.from(headingRef.current, { autoAlpha: 0, y: 24 })
-        .from(categoryRefs.current, {
-          autoAlpha: 0,
-          y: 18,
-          stagger: 0.14,
-        }, "-=0.1");
-
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 80%",
-        onEnter: () => tl.play(),
-        markers: false,
-      });
-
-      return () => {
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-        tl.kill();
-      };
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section
+    <motion.section
       id="skills"
-      ref={sectionRef}
       className="py-20 bg-muted/30"
       aria-labelledby="skills-heading"
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={headingRef} className="text-center mb-12">
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+        >
           <h2 id="skills-heading" className="text-3xl sm:text-4xl font-bold text-foreground">
             Skills & Technologies
           </h2>
           <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
             Technologies I use to build scalable and performant applications with maintainable architecture.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {SKILL_CATEGORIES.map((category) => (
-            <div
+            <motion.div
               key={category.category}
-              ref={trackCategoryRef}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
               className="rounded-2xl border border-border bg-card p-5"
             >
               <h3 className="text-lg font-semibold text-foreground mb-4">{category.category}</h3>
@@ -152,10 +118,10 @@ export default function SkillsSection() {
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

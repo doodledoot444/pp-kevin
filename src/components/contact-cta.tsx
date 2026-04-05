@@ -1,18 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Mail, GitBranch, Link, Copy, Check } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function ContactCTA() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const contactRef = useRef<HTMLDivElement>(null);
-  const socialRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
 
   const email = "dejannkevin@gmail.com";
@@ -32,60 +24,14 @@ export default function ContactCTA() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // Small delay to ensure DOM refs are populated
-    const timeoutId = setTimeout(() => {
-      const ctx = gsap.context(() => {
-        // Check if section is already in viewport
-        const rect = sectionRef.current?.getBoundingClientRect();
-        const isInView = rect && rect.top < window.innerHeight * 0.8;
-
-        if (isInView) {
-          // Animate immediately if already in view
-          const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-
-          tl.from(headerRef.current, { opacity: 0, y: 24, duration: 0.4 }, 0)
-            .from(contactRef.current, { opacity: 0, y: 20, duration: 0.45 }, "-=0.25")
-            .from(socialRef.current, { opacity: 0, y: 16, duration: 0.35 }, "-=0.2");
-        } else {
-          // Use ScrollTrigger if not in view
-          const tl = gsap.timeline({
-            defaults: { ease: "power2.out" },
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 80%",
-              toggleActions: "play none none none",
-              markers: false,
-            },
-          });
-
-          tl.from(headerRef.current, { opacity: 0, y: 24, duration: 0.4 }, 0)
-            .from(contactRef.current, { opacity: 0, y: 20, duration: 0.45 }, "-=0.25")
-            .from(socialRef.current, { opacity: 0, y: 16, duration: 0.35 }, "-=0.2");
-        }
-
-        return () => {
-          ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-        };
-      }, sectionRef);
-
-      return () => {
-        ctx.kill();
-      };
-    }, 100);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
-
   return (
-    <section
+    <motion.section
       id="contact"
-      ref={sectionRef}
       className="py-24 bg-background relative overflow-hidden scroll-mt-20"
       aria-labelledby="contact-heading"
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       {/* Subtle background accent */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -94,9 +40,11 @@ export default function ContactCTA() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div
-          ref={headerRef}
+        <motion.div
           className="text-center mb-16"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
         >
           <h2
             id="contact-heading"
@@ -107,14 +55,15 @@ export default function ContactCTA() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Open to opportunities and collaborations. Let's build something together.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Contact Options */}
         <div className="max-w-2xl mx-auto">
           {/* Primary Contact - Email */}
-          <div
-            ref={contactRef}
+          <motion.div
             className="mb-12"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
           >
             <div className="bg-muted/10 border border-border/50 rounded-2xl p-8 text-center">
               <div className="mb-6">
@@ -162,12 +111,14 @@ export default function ContactCTA() {
                 Open Email Client
               </motion.a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Social Links */}
-          <div
-            ref={socialRef}
+          <motion.div
             className="text-center"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
           >
             <h3 className="text-lg font-semibold text-foreground mb-6">
               Connect on Social
@@ -205,9 +156,9 @@ export default function ContactCTA() {
                 </span>
               </motion.a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -1,13 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion, Variants } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FEATURED_PROJECTS } from "@/lib/projects";
 import ProjectCard from "@/components/project-card";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const cardItemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -22,46 +17,23 @@ const cardItemVariants: Variants = {
 };
 
 export default function FeaturedProjects() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          end: "+=400",
-          toggleActions: "play none none reverse",
-        },
-      });
-
-      tl.from(headerRef.current, { autoAlpha: 0, y: 30, duration: 0.45 })
-        .from(gridRef.current, { autoAlpha: 0, y: 25, duration: 0.45 }, "-=0.25");
-
-      return () => {
-        ScrollTrigger.getAll().forEach((t) => t.kill());
-        tl.kill();
-      };
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
+    <motion.section
       id="projects"
       className="py-24 bg-background scroll-mt-20"
       aria-labelledby="projects-heading"
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div ref={headerRef} className="mb-16 text-center">
+        <motion.div
+          className="mb-16 text-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+        >
           <h2
             id="projects-heading"
             className="text-4xl sm:text-5xl font-bold text-foreground mb-4"
@@ -71,16 +43,15 @@ export default function FeaturedProjects() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             A selection of projects that demonstrate my skills in web application development.
           </p>
-        </div>
+        </motion.div>
 
         {/* Projects Grid */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {FEATURED_PROJECTS.map((project, index) => (
             <motion.div
               key={project.id}
               initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+              animate="visible"
               variants={cardItemVariants}
             >
               <ProjectCard project={project} index={index} />
@@ -91,14 +62,12 @@ export default function FeaturedProjects() {
         {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.12 }}
-          viewport={{ once: true }}
           className="text-center mt-16"
         >
-         
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
