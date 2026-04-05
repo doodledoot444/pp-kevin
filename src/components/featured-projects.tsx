@@ -56,7 +56,7 @@ export default function FeaturedProjects() {
     <section
       ref={sectionRef}
       id="projects"
-      className="py-24 bg-background"
+      className="py-24 bg-background scroll-mt-20"
       aria-labelledby="projects-heading"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -69,7 +69,7 @@ export default function FeaturedProjects() {
             Showcasing Personal Projects
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Showcasing Personal Projects.
+            A selection of projects that demonstrate my skills in web application development.
           </p>
         </div>
 
@@ -96,15 +96,7 @@ export default function FeaturedProjects() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <motion.a
-            href="#contact"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.2 }}
-            className="inline-flex items-center justify-center px-6 py-3 border border-border text-base font-medium rounded-md text-foreground bg-background hover:bg-muted"
-          >
-            Explore More Projects
-          </motion.a>
+         
         </motion.div>
       </div>
     </section>

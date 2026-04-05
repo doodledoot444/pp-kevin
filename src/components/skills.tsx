@@ -60,10 +60,10 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   {
     category: "Tools / DevOps",
     items: [
-      { name: "Docker", icon: <Terminal size={18} className="text-primary" />, level: "Advanced" },
-      { name: "Git", icon: <Terminal size={18} className="text-primary" />, level: "Advanced" },
-      { name: "Vercel", icon: <Cloud size={18} className="text-primary" />, level: "Advanced" },
-      { name: "CI/CD", icon: <Zap size={18} className="text-primary" />, level: "Intermediate" },
+      { name: "Docker", icon: <Terminal size={18} className="text-primary" />, level: "Entry-Level" },
+      { name: "Git", icon: <Terminal size={18} className="text-primary" />, level: "Beginner" },
+      { name: "Vercel", icon: <Cloud size={18} className="text-primary" />, level: "Entry-Level" },
+      { name: "CI/CD", icon: <Zap size={18} className="text-primary" />, level: "Beginner" },
     ],
   },
 ];
@@ -74,7 +74,6 @@ export default function SkillsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const categoryRefs = useRef<HTMLDivElement[]>([]);
-  categoryRefs.current = [];
 
   const trackCategoryRef = (el: HTMLDivElement) => {
     if (el && !categoryRefs.current.includes(el)) categoryRefs.current.push(el);

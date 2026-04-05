@@ -84,7 +84,7 @@ export default function ContactCTA() {
     <section
       id="contact"
       ref={sectionRef}
-      className="py-24 bg-background relative overflow-hidden"
+      className="py-24 bg-background relative overflow-hidden scroll-mt-20"
       aria-labelledby="contact-heading"
     >
       {/* Subtle background accent */}

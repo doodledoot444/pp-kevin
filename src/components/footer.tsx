@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground">John Kevin Dejan</h3>
-            <p className="text-muted-foreground">Full Stack Developer</p>
+            <p className="text-muted-foreground">Web App Developer</p>
           </div>
           <div className="flex space-x-6">
             <a href="https://github.com/veksimage" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -14,8 +14,8 @@ export default function Footer() {
             <a href="https://www.linkedin.com/in/kevin-dejan-108ba1223/?skipRedirect=true" className="text-muted-foreground hover:text-foreground transition-colors">
               LinkedIn
             </a>
-            <a href="https://twitter.com" className="text-muted-foreground hover:text-foreground transition-colors">
-              Twitter
+            <a href="https://www.instagram.com/kevinforya_/" className="text-muted-foreground hover:text-foreground transition-colors">
+              Instagram
             </a>
           </div>
         </div>

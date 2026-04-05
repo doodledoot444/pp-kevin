@@ -2,11 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Code2, Layers, Zap } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type SpecializationItem = {
   icon: React.ReactNode;
@@ -28,7 +24,7 @@ const SPECIALIZATIONS: SpecializationItem[] = [
   {
     icon: <Zap size={20} className="text-primary" />,
     title: "Performance & Scale",
-    description: "Optimization, caching strategies, DevOps, Docker, CI/CD",
+    description: "Optimization, DevOps, Docker, CI/CD",
   },
 ];
 
@@ -44,103 +40,10 @@ export default function AboutSection() {
   const headerRef = useRef<HTMLDivElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const bulletRefs = useRef<HTMLDivElement[]>([]);
-  const specializationRefs = useRef<HTMLDivElement[]>([]);
-
-  bulletRefs.current = [];
-  specializationRefs.current = [];
-
-  const trackBulletRef = (el: HTMLDivElement) => {
-    if (el && !bulletRefs.current.includes(el)) bulletRefs.current.push(el);
-  };
-
-  // Specialization refs no longer needed for animation
-  const trackSpecializationRef = (el: HTMLDivElement) => {
-    if (el && !specializationRefs.current.includes(el)) specializationRefs.current.push(el);
-  };
 
   useEffect(() => {
     // Scroll to top when component mounts (for navigation)
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // Small delay to ensure DOM refs are populated
-    const timeoutId = setTimeout(() => {
-      const ctx = gsap.context(() => {
-        // Check if section is already in viewport
-        const rect = sectionRef.current?.getBoundingClientRect();
-        const isInView = rect && rect.top < window.innerHeight * 0.8;
-
-        if (isInView) {
-          // Animate immediately if already in view
-          const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-
-          tl.from(headerRef.current, { opacity: 0, y: 24, duration: 0.4 }, 0)
-            .from(visualRef.current, { opacity: 0, x: -20, duration: 0.45 }, "-=0.25")
-            .from(contentRef.current, { opacity: 0, x: 20, duration: 0.45 }, "-=0.4")
-            .from(
-              bulletRefs.current,
-              {
-                opacity: 0,
-                y: 12,
-                duration: 0.35,
-                stagger: 0.08,
-              },
-              "-=0.3"
-            );
-         
-        } else {
-          // Use ScrollTrigger if not in view
-          const tl = gsap.timeline({
-            defaults: { ease: "power2.out" },
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 80%",
-              toggleActions: "play none none none",
-              markers: false,
-            },
-          });
-
-          tl.from(headerRef.current, { opacity: 0, y: 24, duration: 0.4 }, 0)
-            .from(visualRef.current, { opacity: 0, x: -20, duration: 0.45 }, "-=0.25")
-            .from(contentRef.current, { opacity: 0, x: 20, duration: 0.45 }, "-=0.4")
-            .from(
-              bulletRefs.current,
-              {
-                opacity: 0,
-                y: 12,
-                duration: 0.35,
-                stagger: 0.08,
-              },
-              "-=0.3"
-            )
-            .from(
-              specializationRefs.current,
-              {
-                opacity: 0,
-                y: 20,
-                duration: 0.25,
-                stagger: 0.06,
-              },
-              "-=0.2"
-            );
-        }
-
-        return () => {
-          ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-        };
-      }, sectionRef);
-
-      return () => {
-        ctx.kill();
-      };
-    }, 100);
-
-    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
@@ -157,7 +60,10 @@ export default function AboutSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
           ref={headerRef}
           className="mb-16 text-center lg:text-left"
         >
@@ -171,12 +77,18 @@ export default function AboutSection() {
             I approach development with clean architecture, 
             performance optimization, and scalable systems.
           </p>
-        </div>
+        </motion.div>
 
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-16">
         
-          <div ref={visualRef} className="flex justify-center lg:justify-start">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, delay: 0.25 }}
+            ref={visualRef}
+            className="flex justify-center lg:justify-start"
+          >
             <motion.div
               whileHover={{ scale: 1.02, y: -4 }}
               transition={{ duration: 0.3, type: "spring", stiffness: 200, damping: 30 }}
@@ -220,10 +132,16 @@ export default function AboutSection() {
                 </p>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Right: Content */}
-          <div ref={contentRef} className="flex flex-col">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, delay: 0.4 }}
+            ref={contentRef}
+            className="flex flex-col"
+          >
             {/* Primary Description */}
             <div className="mb-8">
               <p className="text-base leading-relaxed text-muted-foreground mb-1">
@@ -245,7 +163,6 @@ export default function AboutSection() {
                 {FOCUS_AREAS.map((area, idx) => (
                   <div
                     key={idx}
-                    ref={trackBulletRef}
                     className="flex gap-3 group cursor-pointer"
                   >
                     <motion.div
@@ -262,7 +179,7 @@ export default function AboutSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Specialization Grid */}
@@ -274,7 +191,6 @@ export default function AboutSection() {
             {SPECIALIZATIONS.map((spec, idx) => (
               <motion.div
                 key={idx}
-                ref={trackSpecializationRef}
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.3, type: "spring", stiffness: 200, damping: 25 }}
                 className="group rounded-xl border border-border/50 bg-muted/10 p-6 hover:bg-muted/20 hover:border-primary/30 transition-all duration-300 cursor-pointer"
@@ -288,14 +204,6 @@ export default function AboutSection() {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {spec.description}
                 </p>
-                <motion.div
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                  className="mt-4 inline-flex items-center gap-2 text-primary text-sm font-medium opacity-70 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer py-1 px-2"
-                >
-                  Learn more
-                  <ArrowRight size={16} />
-                </motion.div>
               </motion.div>
             ))}
           </div>
