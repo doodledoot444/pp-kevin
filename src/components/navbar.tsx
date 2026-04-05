@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, memo } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const DASHBOARD_PAGES = ["/about", "/contact"];
@@ -11,9 +10,6 @@ const DASHBOARD_PAGES = ["/about", "/contact"];
 export default memo(function Navbar() {
   const pathname = usePathname();
   const showDashboardButton = DASHBOARD_PAGES.includes(pathname);
-  const { scrollY } = useScroll();
-  const backgroundOpacity = useTransform(scrollY, [0, 100], [0.15, 0.9]);
-  const blur = useTransform(scrollY, [0, 100], [0, 10]);
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -36,12 +32,8 @@ export default memo(function Navbar() {
   };
 
   return (
-    <motion.nav
-      style={{
-        backdropFilter: `blur(${blur}px)`,
-        backgroundColor: `rgba(12, 18, 28, ${backgroundOpacity})`,
-      }}
-      className="fixed top-0 w-full z-50 border-b border-border/40"
+    <nav
+      className="fixed top-0 w-full z-50 border-b border-border/40 bg-background/15 backdrop-blur-sm"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -83,11 +75,8 @@ export default memo(function Navbar() {
         </div>
         {/* Mobile Menu */}
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-sm border-t border-border/40"
+          <div
+            className="md:hidden bg-background/95 backdrop-blur-sm border-t border-border/40 animate-in fade-in slide-in-from-top-2 duration-200"
           >
             <div className="px-2 pt-2 pb-3 space-y-1">
               <Link
@@ -121,9 +110,9 @@ export default memo(function Navbar() {
                 </Link>
               )}
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.nav>
+    </nav>
   );
 });

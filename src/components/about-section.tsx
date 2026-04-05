@@ -42,8 +42,10 @@ export default function AboutSection() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Scroll to top when component mounts (for navigation)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Only scroll if not already near top to avoid jank
+    if (window.scrollY > 100) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, []);
 
   return (

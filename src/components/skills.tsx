@@ -1,6 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
+import { memo } from "react";
 import {
   Code2,
   Server,
@@ -63,65 +61,50 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   },
 ];
 
-const itemHover = { scale: 1.03, opacity: 0.97 };
-
-export default function SkillsSection() {
+export default memo(function SkillsSection() {
   return (
-    <motion.section
+    <section
       id="skills"
       className="py-20 bg-muted/30"
       aria-labelledby="skills-heading"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
-        >
+        <div className="text-center mb-12">
           <h2 id="skills-heading" className="text-3xl sm:text-4xl font-bold text-foreground">
             Skills & Technologies
           </h2>
           <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
             Technologies I use to build scalable and performant applications with maintainable architecture.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {SKILL_CATEGORIES.map((category) => (
-            <motion.div
+            <div
               key={category.category}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
-              className="rounded-2xl border border-border bg-card p-5"
+              className="rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:shadow-lg hover:border-primary/50"
             >
               <h3 className="text-lg font-semibold text-foreground mb-4">{category.category}</h3>
               <div className="grid gap-3">
                 {category.items.map((item) => (
-                  <motion.div
+                  <div
                     key={`${category.category}-${item.name}`}
-                    whileHover={itemHover}
-                    transition={{ duration: 0.24 }}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg border border-border/50 bg-background/5"
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg border border-border/50 bg-background/5 transition-all duration-200 hover:border-primary/30 hover:bg-primary/5"
                   >
-                    <span className="flex items-center justify-center w-7 h-7 bg-primary/15 text-primary rounded-md">
+                    <span className="flex items-center justify-center w-7 h-7 bg-primary/15 text-primary rounded-md flex-shrink-0">
                       {item.icon}
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm font-medium text-foreground">{item.name}</p>
                       {item.level && <p className="text-xs text-muted-foreground">{item.level}</p>}
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
-}
+});

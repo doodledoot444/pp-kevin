@@ -19,36 +19,68 @@ export default function ContactCTA() {
     }
   };
 
-  useEffect(() => {
-    // Scroll to top when component mounts (for navigation)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  // Remove scroll-to-top side effect (this is bad UX inside a section)
+  // If you need it, it belongs in navigation logic, not here.
+
+  const sectionVariants = {
+    hidden: {
+      opacity: 0,
+      y: 30,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6 },
+    },
+  };
+
+  const fadeUp = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    visible: (i = 0) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.1 + i * 0.08,
+        duration: 0.45,
+      },
+    }),
+  };
 
   return (
     <motion.section
       id="contact"
       className="py-24 bg-background relative overflow-hidden scroll-mt-20"
       aria-labelledby="contact-heading"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      variants={sectionVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
     >
-      {/* Subtle background accent */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-20"></div>
-      </div>
+      {/* Background Accent (animated subtly) */}
+      <motion.div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <div className="absolute top-20 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-20" />
+      </motion.div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
         {/* Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
+          variants={fadeUp}
+          custom={0}
         >
           <h2
             id="contact-heading"
-            className="text-4xl sm:text-5xl lg:text-5xl font-bold text-foreground mb-4"
+            className="text-4xl sm:text-5xl font-bold text-foreground mb-4"
           >
             Contact
           </h2>
@@ -58,14 +90,15 @@ export default function ContactCTA() {
         </motion.div>
 
         <div className="max-w-2xl mx-auto">
-          {/* Primary Contact - Email */}
+
+          {/* Email Card */}
           <motion.div
             className="mb-12"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
+            variants={fadeUp}
+            custom={1}
           >
-            <div className="bg-muted/10 border border-border/50 rounded-2xl p-8 text-center">
+            <div className="bg-muted/10 border border-border/50 rounded-2xl p-8 text-center backdrop-blur-sm">
+              
               <div className="mb-6">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
                   <Mail size={24} className="text-primary" />
@@ -83,13 +116,12 @@ export default function ContactCTA() {
                 <code className="text-sm text-foreground font-mono">
                   {email}
                 </code>
+
                 <motion.button
                   onClick={copyToClipboard}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
                   className="p-2 rounded-md hover:bg-muted/20 transition-colors"
-                  aria-label="Copy email address"
                 >
                   {copied ? (
                     <Check size={16} className="text-green-500" />
@@ -99,13 +131,12 @@ export default function ContactCTA() {
                 </motion.button>
               </div>
 
-              {/* Email Button */}
+              {/* CTA Button */}
               <motion.a
                 href={`mailto:${email}`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2, type: "spring", stiffness: 200, damping: 20 }}
-                className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors"
               >
                 <Mail size={18} className="mr-2" />
                 Open Email Client
@@ -116,47 +147,46 @@ export default function ContactCTA() {
           {/* Social Links */}
           <motion.div
             className="text-center"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
+            variants={fadeUp}
+            custom={2}
           >
             <h3 className="text-lg font-semibold text-foreground mb-6">
               Connect on Social
             </h3>
-            <div className="flex justify-center gap-6">
-              <motion.a
-                href="https://github.com/veksimage"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -3, scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.2, type: "spring", stiffness: 300, damping: 20 }}
-                className="group flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 bg-muted/5 hover:bg-muted/10 hover:border-primary/30 transition-all duration-200"
-                aria-label="Visit GitHub profile"
-              >
-                <GitBranch size={24} className="text-muted-foreground group-hover:text-primary transition-colors" />
-                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                  GitHub
-                </span>
-              </motion.a>
 
-              <motion.a
-                href="https://www.linkedin.com/in/kevin-dejan-108ba1223/?skipRedirect=true"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -3, scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.2, type: "spring", stiffness: 300, damping: 20 }}
-                className="group flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 bg-muted/5 hover:bg-muted/10 hover:border-primary/30 transition-all duration-200"
-                aria-label="Visit LinkedIn profile"
-              >
-                <Link size={24} className="text-muted-foreground group-hover:text-primary transition-colors" />
-                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                  LinkedIn
-                </span>
-              </motion.a>
+            <div className="flex justify-center gap-6">
+              {[
+                {
+                  href: "https://github.com/veksimage",
+                  icon: GitBranch,
+                  label: "GitHub",
+                },
+                {
+                  href: "https://www.linkedin.com/in/kevin-dejan-108ba1223/",
+                  icon: Link,
+                  label: "LinkedIn",
+                },
+              ].map(({ href, icon: Icon, label }, i) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -4, scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  variants={fadeUp}
+                  custom={3 + i}
+                  className="group flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 bg-muted/5 hover:bg-muted/10 hover:border-primary/30 transition-all"
+                >
+                  <Icon className="text-muted-foreground group-hover:text-primary transition-colors" />
+                  <span className="text-xs text-muted-foreground group-hover:text-foreground">
+                    {label}
+                  </span>
+                </motion.a>
+              ))}
             </div>
           </motion.div>
+
         </div>
       </div>
     </motion.section>

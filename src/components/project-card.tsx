@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Project } from "@/lib/projects";
 import Link from "next/link";
 import { ExternalLink, Code2 } from "lucide-react";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 
 interface ProjectCardProps {
   project: Project;
@@ -13,22 +13,41 @@ interface ProjectCardProps {
 }
 
 export default memo(function ProjectCard({ project, index }: ProjectCardProps) {
+  const [isTouch, setIsTouch] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  useEffect(() => {
+    setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
+
+  const toggleOverlay = (e: React.MouseEvent) => {
+    if (isTouch) {
+      // Prevent toggle if clicking on links inside overlay
+      const target = e.target as HTMLElement;
+      if (target.closest('a')) {
+        return;
+      }
+      setShowOverlay(!showOverlay);
+    }
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.6,
         delay: index * 0.1,
         ease: "easeOut",
       }}
-      viewport={{ once: true, margin: "0px 0px -100px 0px" }}
       whileHover={{ y: -8 }}
       className="group h-full"
     >
       <article className="h-full flex flex-col bg-card border border-border rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/50">
         {/* Image Container */}
-        <div className="relative w-full aspect-video overflow-hidden bg-muted">
+        <div 
+          className="relative w-full aspect-video overflow-hidden bg-muted cursor-pointer"
+          onClick={toggleOverlay}
+        >
           <Image
             src={project.image}
             alt={project.alt}
@@ -40,7 +59,8 @@ export default memo(function ProjectCard({ project, index }: ProjectCardProps) {
           {/* Overlay with CTA */}
           <motion.div
             initial={{ opacity: 0 }}
-            whileHover={{ opacity: 1 }}
+            animate={isTouch ? { opacity: showOverlay ? 1 : 0 } : undefined}
+            whileHover={!isTouch ? { opacity: 1 } : undefined}
             transition={{ duration: 0.3 }}
             className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-xs"
           >
