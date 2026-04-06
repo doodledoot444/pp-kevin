@@ -19,17 +19,17 @@ export default function Footer() {
   return (
     <footer className="bg-muted/40 border-t border-border relative overflow-hidden">
       
-      {/* subtle background accent */}
+      
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-20" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         
-        {/* Top Section */}
+      
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
           
-          {/* Brand */}
+          
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -45,7 +45,7 @@ export default function Footer() {
             </p>
           </motion.div>
 
-          {/* Navigation */}
+          
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -121,7 +121,7 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        {/* Bottom Section */}
+       
         <motion.div
           variants={fadeUp}
           initial="hidden"

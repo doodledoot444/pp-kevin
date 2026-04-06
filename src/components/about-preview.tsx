@@ -43,7 +43,7 @@ export default memo(function AboutPreview() {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
-          {/* Image */}
+          
           <motion.div
             variants={imageVariants}
             initial="hidden"
@@ -68,7 +68,7 @@ export default memo(function AboutPreview() {
             </div>
           </motion.div>
 
-          {/* Text */}
+         
           <motion.div
             variants={textVariants}
             initial="hidden"
@@ -80,10 +80,8 @@ export default memo(function AboutPreview() {
             </h2>
 
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              I’m a full-stack developer focused on building reliable, 
-              user-centered web applications. I work primarily within modern 
-              JavaScript ecosystems, developing responsive frontends and structured 
-              backend systems that are designed to perform well in real-world use.
+              Web developer focused on building reliable, 
+              scalable applications. Passionate about learning new technologies and best practices to create efficient solutions.
             </p>
 
             <ul className="space-y-2 text-muted-foreground">

@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar";
+  import Navbar from "@/components/navbar";
 import ContactCTA from "@/components/contact-cta";
 import Footer from "@/components/footer";
 

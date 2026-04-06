@@ -42,7 +42,6 @@ export default function AboutSection() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only scroll if not already near top to avoid jank
     if (window.scrollY > 100) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -55,7 +54,7 @@ export default function AboutSection() {
       className="py-24 bg-background relative overflow-hidden"
       aria-labelledby="about-heading"
     >
-      {/* Subtle background accent */}
+      
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-20"></div>
       </div>
@@ -144,7 +143,7 @@ export default function AboutSection() {
             ref={contentRef}
             className="flex flex-col"
           >
-            {/* Primary Description */}
+            
             <div className="mb-8">
               <p className="text-base leading-relaxed text-muted-foreground mb-1">
                 I build web applications that balance with user experience. My approach centers on
@@ -156,7 +155,7 @@ export default function AboutSection() {
               </ul>
             </div>
 
-            {/* Focus Areas */}
+
             <div className="mb-10">
               <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">
                 Focus Areas
@@ -184,17 +183,32 @@ export default function AboutSection() {
           </motion.div>
         </div>
 
-        {/* Specialization Grid */}
-        <div className="mt-20 pt-16 border-t border-border/50">
-          <h3 className="text-sm font-semibold text-foreground mb-8 uppercase tracking-wide">
+        
+        <motion.div
+          className="mt-20 pt-16 border-t border-border/50"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ staggerChildren: 0.08 }}
+        >
+          <motion.h3
+            className="text-sm font-semibold text-foreground mb-8 uppercase tracking-wide"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+          >
             Specialization
-          </h3>
+          </motion.h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {SPECIALIZATIONS.map((spec, idx) => (
               <motion.div
                 key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.35, delay: idx * 0.08, ease: 'easeOut' }}
                 whileHover={{ y: -4 }}
-                transition={{ duration: 0.3, type: "spring", stiffness: 200, damping: 25 }}
                 className="group rounded-xl border border-border/50 bg-muted/10 p-6 hover:bg-muted/20 hover:border-primary/30 transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-start gap-4 mb-3">
@@ -209,7 +223,7 @@ export default function AboutSection() {
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

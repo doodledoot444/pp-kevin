@@ -19,8 +19,6 @@ export default function ContactCTA() {
     }
   };
 
-  // Remove scroll-to-top side effect (this is bad UX inside a section)
-  // If you need it, it belongs in navigation logic, not here.
 
   const sectionVariants = {
     hidden: {
@@ -59,7 +57,7 @@ export default function ContactCTA() {
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
     >
-      {/* Background Accent (animated subtly) */}
+      
       <motion.div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
@@ -91,7 +89,7 @@ export default function ContactCTA() {
 
         <div className="max-w-2xl mx-auto">
 
-          {/* Email Card */}
+          
           <motion.div
             className="mb-12"
             variants={fadeUp}
@@ -111,7 +109,7 @@ export default function ContactCTA() {
                 </p>
               </div>
 
-              {/* Email Display */}
+              
               <div className="flex items-center justify-center gap-3 mb-6 p-4 bg-background rounded-lg border border-border/30">
                 <code className="text-sm text-foreground font-mono">
                   {email}
@@ -131,7 +129,7 @@ export default function ContactCTA() {
                 </motion.button>
               </div>
 
-              {/* CTA Button */}
+           
               <motion.a
                 href={`mailto:${email}`}
                 whileHover={{ scale: 1.03 }}
@@ -144,7 +142,7 @@ export default function ContactCTA() {
             </div>
           </motion.div>
 
-          {/* Social Links */}
+          
           <motion.div
             className="text-center"
             variants={fadeUp}
