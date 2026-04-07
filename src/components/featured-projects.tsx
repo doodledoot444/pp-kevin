@@ -6,21 +6,18 @@ import { FEATURED_PROJECTS } from "@/lib/projects";
 import ProjectCard from "@/components/project-card";
 import ProjectModal from "@/components/project-modal";
 import { useProjectModal } from "@/hooks/useProjectModal";
-import {  EA_EASING } from "@/lib/animationVariants";
+import { EA_EASING } from "@/lib/animationVariants";
 
 export default memo(function FeaturedProjects() {
   const { isOpen, activeProjectId, openModal, closeModal } = useProjectModal();
 
-  
   const activeProject = useMemo(
     () => FEATURED_PROJECTS.find((p) => p.id === activeProjectId) || null,
     [activeProjectId]
   );
 
-  
   const memoizedOpenModal = useCallback(openModal, [openModal]);
 
-  // Container stagger
   const containerVariants = {
     hidden: {},
     visible: {
@@ -29,34 +26,26 @@ export default memo(function FeaturedProjects() {
       },
     },
   };
-  
+
   const sectionVariants = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-    },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.5,
         ease: EA_EASING,
       },
     },
   };
-  
+
   const cardVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.92,
-      y: 20,
-    },
+    hidden: { opacity: 0, y: 16 },
     visible: {
       opacity: 1,
-      scale: 1,
       y: 0,
       transition: {
-        duration: 0.4,
+        duration: 0.35,
         ease: EA_EASING,
       },
     },
@@ -66,44 +55,39 @@ export default memo(function FeaturedProjects() {
     <>
       <motion.section
         id="projects"
-        className="py-24 bg-background scroll-mt-20"
+        className="py-20 bg-background scroll-mt-20"
         aria-labelledby="projects-heading"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.2, margin: "-100px" }}
+        viewport={{ once: true, amount: 0.1 }} // FIXED
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          
-          <div className="mb-16 text-center">
-            <h2
-              id="projects-heading"
-              className="text-4xl sm:text-5xl font-bold text-foreground mb-4"
-            >
+
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
               Showcasing Personal Projects
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
               A selection of projects that demonstrate my skills in web application development.
             </p>
           </div>
 
-          
           <motion.div
             variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }} // SINGLE OBSERVER
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-8"
           >
             {FEATURED_PROJECTS.map((project, index) => (
               <motion.div
                 key={project.id}
                 variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, amount: 0.2, margin: "-100px" }}
-                className="will-change-transform"
+                className="w-full"
               >
-                <ProjectCard 
-                  project={project} 
+                <ProjectCard
+                  project={project}
                   index={index}
                   onOpenModal={memoizedOpenModal}
                 />
@@ -111,13 +95,11 @@ export default memo(function FeaturedProjects() {
             ))}
           </motion.div>
 
-          {/* CTA */}
           <div className="text-center mt-16" />
         </div>
       </motion.section>
 
-     
-      <ProjectModal 
+      <ProjectModal
         project={activeProject}
         isOpen={isOpen}
         onClose={closeModal}
