@@ -88,7 +88,7 @@ export default memo(function AboutPreview() {
               {[
                 "Frontend: React, Next.js, Angular",
                 "Backend: SQL, Express, MongoDB, PostgreSQL, Prisma, Supabase",
-                "Hosting: Vercel, Hostinger, CI/CD",
+                "Hosting: Vercel, CI/CD",
                 "Focus: Scalable architecture",
               ].map((item, i) => (
                 <motion.li

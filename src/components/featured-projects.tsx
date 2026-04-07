@@ -6,7 +6,7 @@ import { FEATURED_PROJECTS } from "@/lib/projects";
 import ProjectCard from "@/components/project-card";
 import ProjectModal from "@/components/project-modal";
 import { useProjectModal } from "@/hooks/useProjectModal";
-import { projectModalVariants, EA_EASING } from "@/lib/animationVariants";
+import {  EA_EASING } from "@/lib/animationVariants";
 
 export default memo(function FeaturedProjects() {
   const { isOpen, activeProjectId, openModal, closeModal } = useProjectModal();
@@ -29,8 +29,7 @@ export default memo(function FeaturedProjects() {
       },
     },
   };
-
-  // Section fade-in (top-level)
+  
   const sectionVariants = {
     hidden: {
       opacity: 0,
@@ -45,8 +44,7 @@ export default memo(function FeaturedProjects() {
       },
     },
   };
-
-  // Card pop-up with EA easing
+  
   const cardVariants = {
     hidden: {
       opacity: 0,

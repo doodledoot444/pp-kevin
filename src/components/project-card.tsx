@@ -6,7 +6,7 @@ import { Project } from "@/lib/projects";
 import Link from "next/link";
 import { ExternalLink, Code2 } from "lucide-react";
 import { memo, useEffect, useState, useCallback } from "react";
-import { projectModalVariants, EA_EASING } from "@/lib/animationVariants";
+import { EA_EASING } from "@/lib/animationVariants";
 
 interface ProjectCardProps {
   project: Project;
@@ -78,7 +78,6 @@ export default memo(function ProjectCard({ project, index, onOpenModal }: Projec
             />
           </motion.div>
 
-          {/* Overlay with CTA */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={isTouch ? { opacity: showOverlay ? 1 : 0 } : undefined}
@@ -124,7 +123,6 @@ export default memo(function ProjectCard({ project, index, onOpenModal }: Projec
           className="flex-1 p-6 flex flex-col justify-between"
           whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
         >
-          {/* Title and Description */}
           <div className="mb-4">
             <motion.h3 
               className="text-xl font-semibold text-foreground mb-2 line-clamp-2"
@@ -138,7 +136,6 @@ export default memo(function ProjectCard({ project, index, onOpenModal }: Projec
             </p>
           </div>
 
-          {/* Tech Stack */}
           <div className="flex flex-wrap gap-2 pt-4 border-t border-border">
             {project.techStack.map((tech) => (
               <motion.span
