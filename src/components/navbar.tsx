@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect, memo } from "react";
+import { useState, memo } from "react";
 import { Menu, X } from "lucide-react";
 
 const DASHBOARD_PAGES = ["/about", "/contact"];
@@ -11,24 +11,12 @@ export default memo(function Navbar() {
   const pathname = usePathname();
   const showDashboardButton = DASHBOARD_PAGES.includes(pathname);
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
-  const isHomePage = pathname === "/";
-
   const getLinkHref = (section: string) => {
-    if (section === 'about') return '/about';
-    if (isMobile) return `/${section}`;
-    return isHomePage ? `#${section}` : `/${section}`;
+    return `/${section}`;
   };
 
   return (
@@ -69,6 +57,8 @@ export default memo(function Navbar() {
               onClick={toggleMenu}
               className="text-foreground hover:text-primary p-2 rounded-md transition-colors"
               aria-label="Toggle menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -77,6 +67,7 @@ export default memo(function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <div
+            id="mobile-menu"
             className="md:hidden bg-background/95 backdrop-blur-sm border-t border-border/40 animate-in fade-in slide-in-from-top-2 duration-200"
           >
             <div className="px-2 pt-2 pb-3 space-y-1">

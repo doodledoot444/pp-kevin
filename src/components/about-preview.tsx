@@ -2,10 +2,21 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { AboutPreviewSkeleton } from "@/components/skeletons";
 
 import { memo } from "react";
 
-export default memo(function AboutPreview() {
+export default memo(function AboutPreview({ isLoading = false }: { isLoading?: boolean }) {
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-muted/50" aria-busy="true">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AboutPreviewSkeleton />
+        </div>
+      </section>
+    );
+  }
+
   const imageVariants = {
     hidden: {
       opacity: 0,
@@ -38,7 +49,7 @@ export default memo(function AboutPreview() {
   };
 
   return (
-    <section id="about" className="py-20 bg-muted/50">
+    <section className="py-20 bg-muted/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

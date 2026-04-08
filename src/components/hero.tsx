@@ -2,9 +2,26 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { heroVariants, EA_EASING } from "@/lib/animationVariants";
+import { HeroSkeleton } from "@/components/skeletons";
 
-export default function Hero() {
+export default function Hero({ isLoading = false }: { isLoading?: boolean }) {
   const shouldReduceMotion = useReducedMotion();
+
+  if (isLoading) {
+    return (
+      <section
+        id="hero"
+        className="min-h-screen flex items-center justify-center bg-background"
+        aria-busy="true"
+        aria-label="Hero section"
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <HeroSkeleton />
+        </div>
+      </section>
+    );
+  }
+
   const reducedMotionProps = shouldReduceMotion
     ? { initial: "visible", animate: "visible" }
     : { initial: "hidden", animate: "visible" };

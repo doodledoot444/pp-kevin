@@ -1,17 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function MaintenancePage() {
-  const [sourceLabel, setSourceLabel] = useState("Project resource");
-
-  useEffect(() => {
+  const [sourceLabel] = useState(() => {
+    if (typeof window === "undefined") return "Project resource";
     const params = new URLSearchParams(window.location.search);
     const source = params.get("source");
-    setSourceLabel(source === "live" ? "Live site" : source === "repo" ? "Repository" : "Project resource");
-  }, []);
+    return source === "live" ? "Live site" : source === "repo" ? "Repository" : "Project resource";
+  });
 
   return (
     <main className="min-h-screen bg-background text-foreground flex items-center justify-center px-4 py-16">

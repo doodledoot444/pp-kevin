@@ -1,11 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, GitBranch, Link, Copy, Check } from "lucide-react";
+import { ContactSkeleton } from "@/components/skeletons";
 
-export default function ContactCTA() {
+export default function ContactCTA({ isLoading = false }: { isLoading?: boolean }) {
   const [copied, setCopied] = useState(false);
+
+  if (isLoading) {
+    return (
+      <section
+        id="contact"
+        className="py-24 bg-background relative overflow-hidden scroll-mt-20"
+        aria-busy="true"
+        aria-labelledby="contact-heading"
+      >
+        <ContactSkeleton />
+      </section>
+    );
+  }
 
   const email = "dejannkevin@gmail.com";
 
@@ -83,7 +97,7 @@ export default function ContactCTA() {
             Contact
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Open to opportunities and collaborations. Let's build something together.
+            Open to opportunities and collaborations. Let&apos;s build something together.
           </p>
         </motion.div>
 

@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Code2, Layers, Zap } from "lucide-react";
+import { Code2, Layers, Zap } from "lucide-react";
+import { AboutSectionSkeleton } from "@/components/skeletons";
 
 type SpecializationItem = {
   icon: React.ReactNode;
@@ -35,23 +35,26 @@ const FOCUS_AREAS = [
   "Experience delivering production applications both independently and in team environments",
 ];
 
-export default function AboutSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const visualRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (window.scrollY > 100) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, []);
+export default function AboutSection({ isLoading = false }: { isLoading?: boolean }) {
+  if (isLoading) {
+    return (
+      <section
+        id="about"
+        className="py-24 bg-background relative overflow-hidden scroll-mt-20"
+        aria-busy="true"
+        aria-labelledby="about-heading"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <AboutSectionSkeleton />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
       id="about"
-      ref={sectionRef}
-      className="py-24 bg-background relative overflow-hidden"
+      className="py-24 bg-background relative overflow-hidden scroll-mt-20"
       aria-labelledby="about-heading"
     >
       
@@ -65,7 +68,6 @@ export default function AboutSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          ref={headerRef}
           className="mb-16 text-center lg:text-left"
         >
           <h2
@@ -87,13 +89,12 @@ export default function AboutSection() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.45, delay: 0.25 }}
-            ref={visualRef}
             className="flex justify-center lg:justify-start"
           >
             <motion.div
               whileHover={{ scale: 1.02, y: -4 }}
               transition={{ duration: 0.3, type: "spring", stiffness: 200, damping: 30 }}
-              className="relative w-full h-96 rounded-2xl border border-border bg-gradient-to-br from-muted/20 to-muted/5 flex items-center justify-center overflow-hidden group"
+              className="relative w-full h-72 sm:h-96 rounded-2xl border border-border bg-gradient-to-br from-muted/20 to-muted/5 flex items-center justify-center overflow-hidden group"
             >
               {/* Animated grid background */}
               <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-300">
@@ -140,7 +141,6 @@ export default function AboutSection() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.45, delay: 0.4 }}
-            ref={contentRef}
             className="flex flex-col"
           >
             

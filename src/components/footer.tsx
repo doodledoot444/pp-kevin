@@ -2,8 +2,19 @@
 
 import { motion } from 'framer-motion';
 import { GitBranch, Link as LinkIcon, Heart } from 'lucide-react';
+import { FooterSkeleton } from "@/components/skeletons";
 
-export default function Footer() {
+export default function Footer({ isLoading = false }: { isLoading?: boolean }) {
+  if (isLoading) {
+    return (
+      <footer className="bg-muted/40 border-t border-border relative overflow-hidden" aria-busy="true">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <FooterSkeleton />
+        </div>
+      </footer>
+    );
+  }
+
   const fadeUp = {
     hidden: { opacity: 0, y: 20 },
     visible: (i = 0) => ({

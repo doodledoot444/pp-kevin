@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import { motion } from 'framer-motion';
+import { TechStackSkeleton } from "@/components/skeletons";
 
 const technologies = [
   "React", "Next.js", "Angular", "TypeScript",
@@ -31,7 +32,17 @@ const itemVariants = {
   },
 };
 
-export default memo(function TechStack() {
+export default memo(function TechStack({ isLoading = false }: { isLoading?: boolean }) {
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-muted/50" aria-busy="true">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <TechStackSkeleton />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-20 bg-muted/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

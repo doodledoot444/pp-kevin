@@ -2,25 +2,26 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { ProjectCardSkeleton } from "@/components/skeletons";
 import { Project } from "@/lib/projects";
 import Link from "next/link";
 import { ExternalLink, Code2 } from "lucide-react";
-import { memo, useEffect, useState, useCallback } from "react";
+import { memo, useState, useCallback } from "react";
 import { EA_EASING } from "@/lib/animationVariants";
 
 interface ProjectCardProps {
   project: Project;
   index: number;
+  isLoading?: boolean;
   onOpenModal?: (projectId: string) => void;
 }
 
-export default memo(function ProjectCard({ project, index, onOpenModal }: ProjectCardProps) {
-  const [isTouch, setIsTouch] = useState(false);
+export default memo(function ProjectCard({ project, index, isLoading = false, onOpenModal }: ProjectCardProps) {
+  const [isTouch] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  });
   const [showOverlay, setShowOverlay] = useState(false);
-
-  useEffect(() => {
-    setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0);
-  }, []);
 
   // Memoize handlers to prevent child re-renders
   const toggleOverlay = useCallback((e: React.MouseEvent) => {
@@ -39,6 +40,10 @@ export default memo(function ProjectCard({ project, index, onOpenModal }: Projec
     }
   }, [onOpenModal, project.id, isTouch]);
 
+  if (isLoading) {
+    return <ProjectCardSkeleton />;
+  }
+
   return (
     <motion.div
       animate={{ opacity: 1, y: 0 }}
@@ -47,7 +52,7 @@ export default memo(function ProjectCard({ project, index, onOpenModal }: Projec
         delay: index * 0.1,
         ease: EA_EASING,
       }}
-      whileHover={{ y: -8, transition: { duration: 0.25, ease: EA_EASING } }}
+      whileHover={{ y: -4, transition: { duration: 0.25, ease: EA_EASING } }}
       className="group h-full cursor-pointer"
       onClick={handleCardClick}
     >
@@ -120,7 +125,7 @@ export default memo(function ProjectCard({ project, index, onOpenModal }: Projec
 
         {/* Content Container */}
         <motion.div 
-          className="flex-1 p-6 flex flex-col justify-between"
+          className="flex-1 p-5 flex flex-col justify-between"
           whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
         >
           <div className="mb-4">

@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   description: "Portfolio of John Kevin Dejan, passionate developer specializing in modern web technologies.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

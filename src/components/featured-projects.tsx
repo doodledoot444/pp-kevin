@@ -2,13 +2,14 @@
 
 import { memo, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
+import { FeaturedProjectsSkeleton } from "@/components/skeletons";
 import { FEATURED_PROJECTS } from "@/lib/projects";
 import ProjectCard from "@/components/project-card";
 import ProjectModal from "@/components/project-modal";
 import { useProjectModal } from "@/hooks/useProjectModal";
 import { EA_EASING } from "@/lib/animationVariants";
 
-export default memo(function FeaturedProjects() {
+export default memo(function FeaturedProjects({ isLoading = false }: { isLoading?: boolean }) {
   const { isOpen, activeProjectId, openModal, closeModal } = useProjectModal();
 
   const activeProject = useMemo(
@@ -16,7 +17,9 @@ export default memo(function FeaturedProjects() {
     [activeProjectId]
   );
 
-  const memoizedOpenModal = useCallback(openModal, [openModal]);
+  const memoizedOpenModal = useCallback((projectId: string) => {
+    openModal(projectId);
+  }, [openModal]);
 
   const containerVariants = {
     hidden: {},
@@ -40,16 +43,33 @@ export default memo(function FeaturedProjects() {
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 16 },
-    visible: {
+    hidden: { opacity: 0, y: 16, scale: 0.98 },
+    visible: (i: number) => ({
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
-        duration: 0.35,
-        ease: EA_EASING,
+        duration: 0.45,
+        delay: i * 0.04,
+        ease: [0.22, 1, 0.36, 1] as const,
       },
-    },
+    }),
   };
+
+  if (isLoading) {
+    return (
+      <section
+        id="projects"
+        className="py-20 bg-background scroll-mt-20"
+        aria-busy="true"
+        aria-labelledby="projects-heading"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FeaturedProjectsSkeleton />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -78,13 +98,14 @@ export default memo(function FeaturedProjects() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }} // SINGLE OBSERVER
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
           >
             {FEATURED_PROJECTS.map((project, index) => (
               <motion.div
                 key={project.id}
                 variants={cardVariants}
-                className="w-full"
+                custom={index}
+                className="w-full h-full"
               >
                 <ProjectCard
                   project={project}

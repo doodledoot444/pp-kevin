@@ -37,16 +37,21 @@ const ProjectModal = memo(function ProjectModal({ project, isOpen, onClose }: Pr
     const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return;
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+
+      if (e.key !== 'Tab' || focusableElements.length === 0) return;
 
       if (e.shiftKey) {
         if (document.activeElement === firstElement) {
-          lastElement.focus();
+          lastElement?.focus();
           e.preventDefault();
         }
       } else {
         if (document.activeElement === lastElement) {
-          firstElement.focus();
+          firstElement?.focus();
           e.preventDefault();
         }
       }
@@ -56,7 +61,7 @@ const ProjectModal = memo(function ProjectModal({ project, isOpen, onClose }: Pr
     firstElement?.focus();
 
     return () => modal.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!project) return null;
 
@@ -81,7 +86,7 @@ const ProjectModal = memo(function ProjectModal({ project, isOpen, onClose }: Pr
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="w-full max-w-2xl bg-card border border-border rounded-xl overflow-hidden shadow-2xl"
+            className="relative w-full max-w-2xl max-h-[calc(100vh-3rem)] overflow-auto bg-card border border-border rounded-xl shadow-2xl"
           >
             {/* Close Button */}
             <button

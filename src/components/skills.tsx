@@ -1,4 +1,8 @@
+"use client";
+
 import { memo } from "react";
+import { motion, type Variants } from "framer-motion";
+import { SkillsSkeleton } from "@/components/skeletons";
 import {
   Code2,
   Server,
@@ -10,6 +14,8 @@ import {
   Terminal,
   Shield,
 } from "lucide-react";
+
+
 
 type SkillItem = {
   name: string;
@@ -61,7 +67,66 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   },
 ];
 
-export default memo(function SkillsSection() {
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const container: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const leftVariant: Variants = {
+  hidden: { opacity: 0, x: -32 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.58,
+      ease: EASE,
+    },
+  },
+};
+
+const rightVariant: Variants = {
+  hidden: { opacity: 0, x: 32 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.58,
+      ease: EASE,
+    },
+  },
+};
+
+const itemFade: Variants = {
+  hidden: { opacity: 0, y: 8 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.32, ease: EASE },
+  },
+};
+
+export default memo(function SkillsSection({ isLoading = false }: { isLoading?: boolean }) {
+  if (isLoading) {
+    return (
+      <section
+        id="skills"
+        className="py-20 bg-muted/30"
+        aria-busy="true"
+        aria-labelledby="skills-heading"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SkillsSkeleton />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       id="skills"
@@ -78,17 +143,28 @@ export default memo(function SkillsSection() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {SKILL_CATEGORIES.map((category) => (
-            <div
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid gap-6 md:grid-cols-2 xl:grid-cols-4"
+        >
+          {SKILL_CATEGORIES.map((category, index) => {
+            const isLeft = index % 2 === 0;
+
+            return (
+            <motion.div
               key={category.category}
+              variants={isLeft ? leftVariant : rightVariant}
               className="rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:shadow-lg hover:border-primary/50"
             >
               <h3 className="text-lg font-semibold text-foreground mb-4">{category.category}</h3>
               <div className="grid gap-3">
                 {category.items.map((item) => (
-                  <div
+                  <motion.div
                     key={`${category.category}-${item.name}`}
+                    variants={itemFade}
                     className="flex items-center gap-3 px-3 py-2 rounded-lg border border-border/50 bg-background/5 transition-all duration-200 hover:border-primary/30 hover:bg-primary/5"
                   >
                     <span className="flex items-center justify-center w-7 h-7 bg-primary/15 text-primary rounded-md flex-shrink-0">
@@ -98,12 +174,13 @@ export default memo(function SkillsSection() {
                       <p className="text-sm font-medium text-foreground">{item.name}</p>
                       {item.level && <p className="text-xs text-muted-foreground">{item.level}</p>}
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
-          ))}
-        </div>
+            </motion.div>
+          );
+          })}
+        </motion.div>
       </div>
     </section>
   );
