@@ -52,7 +52,7 @@ export default function Hero({ isLoading = false }: { isLoading?: boolean }) {
           variants={heroVariants.subtext}
           className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
         >
-          I build production-grade web systems that handle real users, payments, and scale.
+          I build production-ready web systems with real-time verification and data processing.
         </motion.p>
 
         <motion.div

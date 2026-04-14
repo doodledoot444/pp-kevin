@@ -68,7 +68,7 @@ export default memo(function AboutPreview({ isLoading = false }: { isLoading?: b
                 className="w-full h-full"
               >
                 <Image
-                  src="/projects/kevin.jpg"
+                  src="/projects/kevinimg.JPG"
                   alt="Kevin Dejan - Full Stack Developer"
                   width={400}
                   height={400}
@@ -91,15 +91,16 @@ export default memo(function AboutPreview({ isLoading = false }: { isLoading?: b
             </h2>
 
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Web developer focused on building reliable, 
-              scalable applications. Passionate about learning new technologies and best practices to create efficient solutions.
+              Web developer focused on building simple, 
+              digital applications. Passionate about learning new technologies
+              and best practices to create efficient solutions.
             </p>
 
             <ul className="space-y-2 text-muted-foreground">
               {[
                 "Frontend: React, Next.js, Angular",
                 "Backend: SQL, Express, MongoDB, PostgreSQL, Prisma, Supabase",
-                "Hosting: Vercel, CI/CD",
+                "Hosting: Vercel",
                 "Focus: Scalable architecture",
               ].map((item, i) => (
                 <motion.li

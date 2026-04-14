@@ -34,7 +34,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     items: [
       { name: "React", icon: <Code2 size={18} className="text-primary" />, level: "Entry-Level" },
       { name: "Next.js", icon: <Code2 size={18} className="text-primary" />, level: "Entry-Level" },
-      { name: "Angular", icon: <Code2 size={18} className="text-primary" />, level: "Proficient" },
+      { name: "Angular", icon: <Code2 size={18} className="text-primary" />, level: "Entry-Level" },
       { name: "Tailwind CSS", icon: <Monitor size={18} className="text-primary" />, level: "Entry-Level" },
     ],
   },

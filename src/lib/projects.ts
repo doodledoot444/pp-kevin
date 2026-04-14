@@ -12,11 +12,11 @@ export interface Project {
 export const FEATURED_PROJECTS: Project[] = [
   {
     id: "project-1",
-    title: "Flight Booking System",
-    description: "Webhook-based payment confirmation, and real-time flight status updates.",
-    image: "/projects/flight.png",
-    alt: "Flight Booking Platform",
-    techStack: ["React","Next.js", "PayMongo", "Prisma"],
+    title: "Water Station Management Web App",
+    description: "Multi-user order management system with admin control analytics dashboard and email verification notifications",
+    image: "/projects/project1.png",
+    alt: "Water Station Management Web App",
+    techStack: ["Tailwind","Next.js", "PostgreSQL", "Docker", "Prisma"],
     liveUrl: "https://example.com/flightbooking",
     repoUrl: "https://github.com/example/ecommerce",
   },
