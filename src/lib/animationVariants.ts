@@ -6,7 +6,7 @@ export const projectModalVariants = {
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.15, // Faster backdrop fade
+        duration: 0.15, 
       },
     },
     exit: {
@@ -28,7 +28,7 @@ export const projectModalVariants = {
       scale: 1,
       y: 0,
       transition: {
-        duration: 0.25, // Reduced from 0.35 for snappier response
+        duration: 0.25, 
         ease: EA_EASING,
       },
     },
@@ -37,7 +37,7 @@ export const projectModalVariants = {
       scale: 0.95,
       y: 20,
       transition: {
-        duration: 0.15, // Faster exit
+        duration: 0.15, 
         ease: EA_EASING,
       },
     },
@@ -52,14 +52,13 @@ export const projectModalVariants = {
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.05, // Reduced from 0.1
-        duration: 0.2, // Reduced from 0.3
+        delay: 0.05, 
+        duration: 0.2, 
         ease: EA_EASING,
       },
     },
   },
 
-  // Micro-interaction: glow pulse
   glowPulse: {
     hidden: { opacity: 0, scale: 0.98 },
     visible: {
@@ -74,7 +73,6 @@ export const projectModalVariants = {
     },
   },
 
-  // Card hover state: elevated with subtle glow
   cardHover: {
     scale: 1.03,
     y: -8,
@@ -84,8 +82,7 @@ export const projectModalVariants = {
       ease: EA_EASING,
     },
   },
-
-  // Image zoom on hover
+ 
   imageHover: {
     scale: 1.08,
     transition: {
@@ -94,7 +91,6 @@ export const projectModalVariants = {
     },
   },
 
-  // Button interaction
   buttonHover: {
     scale: 1.08,
     transition: {
@@ -110,7 +106,6 @@ export const projectModalVariants = {
     },
   },
 
-  // Stagger for grid items
   staggerContainer: {
     hidden: {},
     visible: {
@@ -121,7 +116,6 @@ export const projectModalVariants = {
     },
   },
 
-  // Individual grid item
   staggerItem: {
     hidden: {
       opacity: 0,
@@ -140,7 +134,6 @@ export const projectModalVariants = {
   },
 };
 
-// Gradient sweep animation (light streak effect)
 export const gradientSweepVariants = {
   visible: {
     backgroundPosition: ['200% center', '-200% center'],

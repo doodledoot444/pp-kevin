@@ -17,7 +17,7 @@ export const FEATURED_PROJECTS: Project[] = [
     image: "/projects/project1.png",
     alt: "Water Station Management Web App",
     techStack: ["Tailwind","Next.js", "PostgreSQL", "Docker", "Prisma"],
-    liveUrl: "https://example.com/flightbooking",
+    liveUrl: "https://cws-webapp.vercel.app/",
     repoUrl: "https://github.com/example/ecommerce",
   },
   {
@@ -42,3 +42,4 @@ export const FEATURED_PROJECTS: Project[] = [
   },
  
 ];
+

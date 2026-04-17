@@ -169,7 +169,7 @@ export default function ContactCTA({ isLoading = false }: { isLoading?: boolean 
             <div className="flex justify-center gap-6">
               {[
                 {
-                  href: "https://github.com/veksimage",
+                  href: "https://github.com/doodledoot444",
                   icon: GitBranch,
                   label: "GitHub",
                 },

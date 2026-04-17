@@ -100,7 +100,7 @@ export default function Footer({ isLoading = false }: { isLoading?: boolean }) {
             <div className="flex justify-center md:justify-start gap-4">
               {[
                 {
-                  href: "https://github.com/veksimage",
+                  href: "https://github.com/doodledoot444",
                   icon: GitBranch,
                   label: "GitHub",
                 },

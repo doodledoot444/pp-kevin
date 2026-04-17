@@ -30,7 +30,7 @@ const SPECIALIZATIONS: SpecializationItem[] = [
 
 const FOCUS_AREAS = [
   "Focus on performance and efficient application behavior",
-  "Develop scalable frontend structures with reusable, maintainable components",
+  "Delivered both independently and within team-based workflows",
   "Capable across the stack, from user interfaces to backend systems",
   "Experience delivering production applications both independently and in team environments",
 ];

@@ -16,6 +16,9 @@ interface ProjectCardProps {
   onOpenModal?: (projectId: string) => void;
 }
 
+const PROJECT_ONE_LIVE_URL = "https://cws-webapp.vercel.app/";
+const GITHUB_PROFILE_URL = "https://github.com/doodledoot444";
+
 export default memo(function ProjectCard({ project, index, isLoading = false, onOpenModal }: ProjectCardProps) {
   const [isTouch] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -39,6 +42,9 @@ export default memo(function ProjectCard({ project, index, isLoading = false, on
       onOpenModal(project.id);
     }
   }, [onOpenModal, project.id, isTouch]);
+
+  const liveHref = project.id === "project-1" ? PROJECT_ONE_LIVE_URL : "/maintenance?source=live";
+  const isExternalLiveLink = project.id === "project-1";
 
   if (isLoading) {
     return <ProjectCardSkeleton />;
@@ -97,9 +103,11 @@ export default memo(function ProjectCard({ project, index, isLoading = false, on
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    href="/maintenance?source=live"
+                    href={liveHref || "/maintenance?source=live"}
+                    target={isExternalLiveLink ? "_blank" : undefined}
+                    rel={isExternalLiveLink ? "noopener noreferrer" : undefined}
                     className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary hover:bg-primary/90 text-white transition-colors"
-                    aria-label={`Under maintenance: ${project.title} live site`}
+                    aria-label={isExternalLiveLink ? `Open ${project.title} live site` : `Under maintenance: ${project.title} live site`}
                   >
                     <ExternalLink className="w-5 h-5" />
                   </Link>
@@ -111,9 +119,11 @@ export default memo(function ProjectCard({ project, index, isLoading = false, on
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    href="/maintenance?source=repo"
+                    href={GITHUB_PROFILE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-secondary/90 text-foreground transition-colors"
-                    aria-label={`Under maintenance: ${project.title} repository`}
+                    aria-label={`Open ${project.title} repository on GitHub`}
                   >
                     <Code2 className="w-5 h-5" />
                   </Link>
