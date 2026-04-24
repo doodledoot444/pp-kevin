@@ -14,9 +14,6 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
-const PROJECT_ONE_LIVE_URL = 'https://cws-webapp.vercel.app/';
-const GITHUB_PROFILE_URL = 'https://github.com/doodledoot444';
-
 const ProjectModal = memo(function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -68,8 +65,10 @@ const ProjectModal = memo(function ProjectModal({ project, isOpen, onClose }: Pr
 
   if (!project) return null;
 
-  const liveHref = project.id === 'project-1' ? PROJECT_ONE_LIVE_URL : '/maintenance?source=live';
-  const isExternalLiveLink = project.id === 'project-1';
+  const liveHref = project.liveUrl || '/maintenance?source=live';
+  const repoHref = project.repoUrl || '/maintenance?source=repo';
+  const isExternalLiveLink = Boolean(project.liveUrl);
+  const isExternalRepoLink = Boolean(project.repoUrl);
 
   return (
     <AnimatePresence mode="wait">
@@ -182,7 +181,7 @@ const ProjectModal = memo(function ProjectModal({ project, isOpen, onClose }: Pr
                     }}
                   >
                     <Link
-                      href={liveHref || '/maintenance?source=live'}
+                      href={liveHref}
                       target={isExternalLiveLink ? '_blank' : undefined}
                       rel={isExternalLiveLink ? 'noopener noreferrer' : undefined}
                       className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors"
@@ -201,9 +200,9 @@ const ProjectModal = memo(function ProjectModal({ project, isOpen, onClose }: Pr
                     }}
                   >
                     <Link
-                      href={GITHUB_PROFILE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href={repoHref}
+                      target={isExternalRepoLink ? '_blank' : undefined}
+                      rel={isExternalRepoLink ? 'noopener noreferrer' : undefined}
                       className="inline-flex items-center gap-2 px-4 py-2.5 bg-secondary text-foreground font-semibold rounded-lg hover:bg-secondary/90 transition-colors"
                     >
                       <Code2 size={16} />
