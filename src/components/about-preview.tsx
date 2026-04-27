@@ -68,7 +68,7 @@ export default memo(function AboutPreview({ isLoading = false }: { isLoading?: b
                 className="w-full h-full"
               >
                 <Image
-                  src="/projects/kevinimg.JPG"
+                  src="/projects/cheat.png"
                   alt="Kevin Dejan - Full Stack Developer"
                   width={400}
                   height={400}
