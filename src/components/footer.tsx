@@ -52,7 +52,7 @@ export default function Footer({ isLoading = false }: { isLoading?: boolean }) {
               John Kevin Dejan
             </h3>
             <p className="text-muted-foreground text-sm">
-              Web Developer focused on scalable, modern applications.
+              Web Developer focused on modern web applications.
             </p>
           </motion.div>
 

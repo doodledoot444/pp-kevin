@@ -29,10 +29,9 @@ const SPECIALIZATIONS: SpecializationItem[] = [
 ];
 
 const FOCUS_AREAS = [
-  "Focus on performance and efficient application behavior",
+  "Focus on performance and application behavior",
   "Delivered both independently and within team-based workflows",
   "Capable across the stack, from user interfaces to backend systems",
-  "Experience delivering production applications both independently and in team environments",
 ];
 
 export default function AboutSection({ isLoading = false }: { isLoading?: boolean }) {
@@ -77,8 +76,7 @@ export default function AboutSection({ isLoading = false }: { isLoading?: boolea
             About
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl">
-            I approach development with clean architecture, 
-            performance optimization, and scalable systems.
+            I approach development with structured components
           </p>
         </motion.div>
 
@@ -146,12 +144,12 @@ export default function AboutSection({ isLoading = false }: { isLoading?: boolea
             
             <div className="mb-8">
               <p className="text-base leading-relaxed text-muted-foreground mb-1">
-                I build web applications that balance with user experience. My approach centers on
+                I build web applications that balance with user experience.
               </p>
               <ul className="space-y-0 text-base text-muted-foreground">
-                <li>• Writing clean, maintainable code that scales</li>
-                <li>• Optimizing performance at both frontend and backend</li>
-                <li>• Designing systems that are intuitive and robust</li>
+                <li>• Maintainable code</li>
+                <li>• Optimizing performance</li>
+                <li>• Designing structured components</li>
               </ul>
             </div>
 

@@ -139,7 +139,7 @@ export default memo(function SkillsSection({ isLoading = false }: { isLoading?: 
             Skills & Technologies
           </h2>
           <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-            Technologies I use to build scalable and performant applications with maintainable architecture.
+            Technologies I use to build and performant applications with maintainable structure.
           </p>
         </div>
 

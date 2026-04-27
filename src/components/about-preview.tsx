@@ -92,8 +92,7 @@ export default memo(function AboutPreview({ isLoading = false }: { isLoading?: b
 
             <p className="text-muted-foreground mb-6 leading-relaxed">
               Web developer focused on building simple, 
-              digital applications. Passionate about learning new technologies
-              and best practices to create efficient solutions.
+              digital applications. Passionate about learning new technologies.
             </p>
 
             <ul className="space-y-2 text-muted-foreground">

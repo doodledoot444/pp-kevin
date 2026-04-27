@@ -53,7 +53,7 @@ export default memo(function TechStack({ isLoading = false }: { isLoading?: bool
             Tech Stack
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Technologies I work with to build robust and scalable solutions
+            Technologies I work with to build structured components
           </p>
         </div>
 

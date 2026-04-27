@@ -48,12 +48,7 @@ export default function Hero({ isLoading = false }: { isLoading?: boolean }) {
           </motion.h1>
         </motion.div>
 
-        <motion.p
-          variants={heroVariants.subtext}
-          className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
-        >
-          I build production-ready web systems with real-time verification and data processing.
-        </motion.p>
+        
 
         <motion.div
           variants={heroVariants.ctaGroup}
